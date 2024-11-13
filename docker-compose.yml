@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+  transcendence:
+    driver: bridge
+
+services:
+  django_user_managemant:
+      container_name: container_user_managemant
+      build:
+        context: ./services/user_management/
+        dockerfile: Dockerfile
+      image: app_user_managemant
+      restart: always
+      networks:
+        - transcendence
+      expose:
+        - "8000"
+      ports:
+        - "8000:8000"
+    environment:
+        SECRET_KEY=: ${SECRET_KEY}
+        Debug: ${Debug}
+        CLIENT_ID_42: ${CLIENT_ID_42}
+        CLIENT_SECRET_42: ${CLIENT_SECRET_42}
+        CLIENT_ID_GOOGLE: ${CLIENT_ID_GOOGLE}
+        CLIENT_SECRET_GOOGLE: ${CLIENT_SECRET_GOOGLE}
+  redis:
+      container_name: container_redis
+      build:
+        context: ./services/redis/
+        dockerfile: Dockerfile
+      image: redis
+      restart: always
+      networks:
+        - transcendence
+      expose:
+        - "6379"

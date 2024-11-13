@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation de votre mot de passe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .email-header img {
+            width: 100px;
+            height: auto;
+        }
+        .email-body {
+            padding: 20px;
+            text-align: center;
+        }
+        .email-body p {
+            color: #333;
+            font-size: 16px;
+            margin: 0 0 20px;
+        }
+        .reset-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .reset-link:hover {
+            background-color: #2980b9;
+        }
+        .email-footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="https://img.freepik.com/vecteurs-libre/logo-tennis-table-detaille_23-2148653818.jpg" alt="Logo">
+        </div>
+        <div class="email-body">
+            <p><b>Cliquez sur le lien suivant pour réinitialiser votre mot de passe :</b></p>
+            <a href="{{ reset_link }}" class="reset-link">Réinitialiser le mot de passe</a>
+        </div>
+        <div class="email-footer">
+            <p>ft_transcendence 1337MED</p>
+        </div>
+    </div>
+</body>
+</html>
