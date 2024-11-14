@@ -2,13 +2,16 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY requirement.txt .
+COPY ./requirement.txt /app/
 
-RUN python -m pip install --upgrade pip &&  pip install -r requirement.txt 
+RUN    python -m pip install --upgrade pip
 
-COPY app_user_manafgement .
+RUN    pip install -r requirement.txt
 
 EXPOSE 8000
 
-CMD ["python", "app_user_manafgement/manage.py", "runserver", "0.0.0.0:8000"]
+COPY ./tools/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
+
+ENTRYPOINT ["/app/entrypoint.sh"]

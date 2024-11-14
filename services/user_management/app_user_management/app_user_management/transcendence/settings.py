@@ -11,27 +11,20 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import environ
-
-env = environ.Env(
-    DEBUG=(bool , False)
-) 
+import os
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR / '../../../../.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('Debug')
-EMAIL_PASSWORD = env('EMAIL_PASSWORD')
-
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('Debug')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Ajoute ton nom de domaine ou adresse IP ici si nécessaire
 
 
@@ -90,12 +83,12 @@ WSGI_APPLICATION = 'transcendence.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
@@ -110,24 +103,33 @@ DATABASES = {
 
 
 
-ATABASES = {
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Première base de données
-        'NAME': 'db1',  # Nom de la première base de données
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'secondary': {
-        'ENGINE': 'django.db.backends.postgresql',  # Deuxième base de données
-        'NAME': 'db2',  # Nom de la deuxième base de données
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': "transcendence", 
+        'USER':"ymaaloum",
+        'PASSWORD': "0000", 
+        'HOST' :'container_postgres',
+        # 'HOST' : '172.18.0.2',
         'PORT': '5432',
     }
 }
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql', 
+#         'NAME': os.getenv('DB_NAME'), 
+#         'USER': 'ymaaloum',
+#         'PASSWORD': '00000',
+#         'HOST' : ,
+#         'PORT': '5432',
+#     }
+# }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -172,23 +174,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-CLIENT_ID_42=env('CLIENT_ID_42')
-CLIENT_SECRET_42=env('CLIENT_SECRET_42')
+CLIENT_ID_42=os.getenv('CLIENT_ID_42')
+CLIENT_SECRET_42=os.getenv('CLIENT_SECRET_42')
 REDIRECT_URI_42='http://localhost:8000/callback/'
-CLIENT_ID_GOOGLE=env('CLIENT_ID_GOOGLE')
-CLIENT_SECRET_GOOGLE=env('CLIENT_SECRET_GOOGLE')
+CLIENT_ID_GOOGLE=os.getenv('CLIENT_ID_GOOGLE')
+CLIENT_SECRET_GOOGLE=os.getenv('CLIENT_SECRET_GOOGLE')
 REDIRECT_URI_GOOGLE="http://localhost:8000/oauth/callback/"
-
-
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media/'
 
 
-
-# {"web":{"client_id":"252248894810-776hem2kri11ofjp3dchfs032caga7sm.apps.googleusercontent.com"
-# ,"project_id":"boreal-analyzer-440917-r8","auth_uri":"https://accounts.google.com/o/oauth2/auth"
-# ,"token_uri":"https://oauth2.googleapis.com/token"
-# ,"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-# "client_secret":"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","
-# redirect_uris":["http://127.0.0.1:8000/oauth/callback"],"javascript_origins":["http://127.0.0.1:8000"]}}
+ 
+# export $(grep -v '^#' ../../../.env  | xargs)\n

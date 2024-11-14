@@ -40,3 +40,4 @@ GRANT ALL PRIVILEGES ON DATABASE votre_base TO votre_utilisateur;
 
 
 
+-- docker exec -it container_postgres psql -U ymaaloum -d db1
