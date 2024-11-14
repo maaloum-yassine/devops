@@ -1,27 +1,20 @@
-version: '3.8'
+# version: '3.8'
 
 networks:
   transcendence:
     driver: bridge
 
-volumes:
-   volume_django:
-    driver_opts:
-      type: none
-      o: bind
-      device: ./services/user_management/app_user_management
-
 
 services:
-  django_user_managemant:
+  django:
       container_name: container_user_managemant
       build:
         context: ./services/user_management/
         dockerfile: Dockerfile
-      # depends_on:
-        # - redis
-        # - postgres
-      image: app_user_managemant
+      depends_on:
+        - postgres
+        - redis
+      image: image_python
       restart: always
       networks:
         - transcendence
@@ -29,42 +22,42 @@ services:
         - "8000"
       ports:
         - "8000:8000"
-      environment:
-          SECRET_KEY: ${SECRET_KEY}
-          Debug: ${Debug}
-          CLIENT_ID_42: ${CLIENT_ID_42}
-          CLIENT_SECRET_42: ${CLIENT_SECRET_42}
-          CLIENT_ID_GOOGLE: ${CLIENT_ID_GOOGLE}
-          CLIENT_SECRET_GOOGLE: ${CLIENT_SECRET_GOOGLE}
-          USER: ${USER}
-          PASSWORD: ${PASSWORD}
-          DB_NAME: ${DB_NAME}
+      env_file:
+      - .env
       volumes:
-        - volume_django:/app
+      - ./services/user_management/app_user_management:/app
 
-  # redis:
-  #     container_name: container_redis
-  #     build:
-  #       context: ./services/redis/
-  #       dockerfile: Dockerfile
-  #     image: redis
-  #     restart: always
-  #     networks:
-  #       - transcendence
-  #     expose:
-  #       - "6379"
-  # postgres:
-  #     container_name: container_postgres
-  #     build: 
-  #       context: ./services/postgres/
-  #       dockerfile: Dockerfile
-  #     image: postgres
-  #     restart: always
-  #     networks:
-  #       - transcendence
-  #     expose:
-  #       - "5432"
-  #     environment:
-  #         POSTGRES_USER: ${USER}
-  #         POSTGRES_PASSWORD: ${PASSWORD}
-  #         POSTGRES_DB: ${DB_NAME}
+
+  redis:
+      container_name: container_redis
+      build:
+        context: ./services/redis/
+        dockerfile: Dockerfile
+      image: redis
+      restart: always
+      networks:
+        - transcendence
+      expose:
+        - "6379"
+      env_file:
+      - .env
+
+  postgres:
+      container_name: container_postgres
+      build:
+        context: ./services/postgres/
+        dockerfile: Dockerfile
+      image: postgres
+      restart: always
+      networks:
+        - transcendence
+      expose:
+        - "5432"
+      env_file:
+      - .env
+      volumes:
+      - ./services/postgres/postgresql_data:/var/lib/postgresql/data
+
+# docker rmi $(docker images -q)
+# docker rm -f $(docker ps -aq)
+# docker volume prune
