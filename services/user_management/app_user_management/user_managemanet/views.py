@@ -26,7 +26,7 @@ import redis , json, uuid, jwt , requests
 @api_view(['GET'])
 def home(request:Request):
     if request.user.is_anonymous:
-        return Response("Welcome To home  page")
+        return Response("Welcome To home 1337  page")
     return redirect('profile')
 
 def generate_verification_token(user, flag):

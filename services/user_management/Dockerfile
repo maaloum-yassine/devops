@@ -6,7 +6,7 @@ COPY ./app_user_management/requirement.txt /app/
 
 RUN    python -m pip install --upgrade pip
 
-RUN    pip install -r requirement.txt
+RUN    pip install -r requirement.txt 
 
 EXPOSE 8000
 
